@@ -1,0 +1,24 @@
+metadata:
+  card_version: "1.0.0"
+  status: invalid_status
+  classification: unclassified
+
+govern:
+  ownership:
+    organization: ""
+    model_owner: ""
+    email: not-an-email
+
+map:
+  model_overview:
+    name: ""
+  intended_use:
+    use_cases: []
+    users: []
+    deployment_context: ""
+    interaction_mode: invalid_mode
+
+measure:
+  performance_metrics:
+    metrics: []
+    primary_metric: ""

@@ -1,0 +1,86 @@
+metadata:
+  card_version: "1.0.0"
+  created_date: "2026-02-15"
+  status: draft
+  classification: unclassified
+  schema_version: "1.0.0"
+
+govern:
+  ownership:
+    organization: Test Agency
+    model_owner: John Doe
+    email: john@test.gov
+  approval:
+    authority: CTO
+    review_cadence: annually
+  incident_response:
+    has_plan: false
+  supply_chain:
+    third_party_components: []
+    open_source_components: []
+    data_providers: []
+
+map:
+  model_overview:
+    name: Test Model
+    version: "1.0.0"
+    type: classification
+    description: A test model for unit testing
+  intended_use:
+    use_cases:
+      - Test classification
+    users:
+      - Developers
+    deployment_context: research
+    interaction_mode: human-in-the-loop
+  out_of_scope:
+    excluded_uses: []
+    misuse_risks: []
+  regulatory:
+    laws: []
+    policies: []
+    ato_status: none
+    rights_impacting: false
+    safety_impacting: false
+  impact_assessment:
+    affected_populations: []
+    benefits: []
+    harms: []
+
+measure:
+  training_data:
+    description: Synthetic test data
+    sources: []
+    known_biases: []
+    pii_present: false
+  evaluation_data:
+    description: Holdout test set
+  performance_metrics:
+    metrics:
+      - name: Accuracy
+        value: 0.95
+    primary_metric: Accuracy
+    disaggregated_results: []
+  bias_evaluation:
+    conducted: false
+    protected_attributes: []
+    fairness_metrics: []
+  robustness:
+    adversarial_testing: false
+    stress_testing: false
+    data_drift_monitoring: false
+
+manage:
+  limitations:
+    known_limitations:
+      - Limited to test scenarios
+    failure_modes: []
+    edge_cases: []
+  mitigations:
+    strategies: []
+  monitoring:
+    has_plan: false
+    alert_thresholds: []
+  lifecycle:
+    retraining_triggers: []
+    retirement_criteria: []

@@ -1,0 +1,254 @@
+metadata:
+  card_version: 1.0.0
+  created_date: 2026-01-15
+  last_updated: 2026-02-01
+  status: review
+  classification: unclassified
+  schema_version: 1.0.0
+govern:
+  ownership:
+    organization: Department of Veterans Affairs
+    model_owner: Dr. Jane Smith
+    email: jane.smith@va.gov
+    chief_ai_officer: Dr. Robert Chen
+    team: Office of Information Technology — AI Center of Excellence
+  approval:
+    authority: VA Chief AI Officer
+    date: 2026-01-10
+    review_cadence: quarterly
+    next_review: 2026-04-10
+  incident_response:
+    has_plan: true
+    contact: ai-incidents@va.gov
+    escalation_path: Team Lead → Division Chief → CAIO → CIO
+    reporting_url: https://va.gov/ai-incidents
+  supply_chain:
+    third_party_components:
+      - name: Azure OpenAI Service
+        version: 2024-06
+        provider: Microsoft
+        license: Commercial
+        risk_assessment: Assessed per FedRAMP High
+    open_source_components:
+      - name: scikit-learn
+        version: 1.5.2
+        provider: scikit-learn developers
+        license: BSD-3-Clause
+      - name: XGBoost
+        version: 2.1.0
+        provider: DMLC
+        license: Apache-2.0
+    data_providers:
+      - VA Corporate Data Warehouse
+      - CMS Medicare Claims Data
+map:
+  model_overview:
+    name: Veterans Benefits Eligibility Predictor
+    version: 2.1.0
+    type: classification
+    architecture: Gradient Boosted Trees (XGBoost)
+    description: Predicts likelihood of veteran eligibility for specific VA benefits programs based on service history,
+      disability ratings, and demographic factors. Used as a decision-support tool to prioritize case reviews.
+    framework: XGBoost / scikit-learn
+    size: 45MB (ensemble of 500 trees)
+    input_format: Structured tabular data (CSV/JSON)
+    output_format: JSON with probability scores and feature importance
+  intended_use:
+    use_cases:
+      - Prioritize veteran benefits applications for human review
+      - Flag potentially eligible veterans who haven't applied
+      - Reduce average processing time for benefits determination
+    users:
+      - VA Benefits Administration caseworkers
+      - Regional Office supervisors
+      - Veterans Service Representatives (VSRs)
+    deployment_context: production
+    interaction_mode: decision-support
+  out_of_scope:
+    excluded_uses:
+      - Automated benefits denial without human review
+      - Use as sole determinant for eligibility decisions
+      - Deployment outside VA benefits administration
+      - Use with non-veteran populations
+    misuse_risks:
+      - Could be used to deny benefits without human review
+      - Risk of over-reliance on model predictions
+      - Potential for discriminatory impact if demographic biases exist
+    geographic_limitations: United States only
+  regulatory:
+    laws:
+      - "Executive Order 14110: Safe, Secure, and Trustworthy AI"
+      - "OMB M-24-10: Advancing Governance, Innovation, and Risk Management for Agency Use of AI"
+      - Privacy Act of 1974
+      - Section 508 Accessibility
+    policies:
+      - VA Directive 6500 — Information Security Program
+      - VA Handbook 6500.3 — AI Risk Management
+    ato_status: granted
+    rights_impacting: true
+    safety_impacting: false
+  impact_assessment:
+    affected_populations:
+      - U.S. military veterans
+      - Veteran dependents and survivors
+      - Disproportionate impact possible on minority veteran populations
+    benefits:
+      - 40% reduction in average case processing time
+      - Identification of 15% more eligible veterans
+      - More consistent prioritization across regional offices
+    harms:
+      - Potential bias against certain demographic groups
+      - False negatives could delay benefits for eligible veterans
+      - Over-reliance could reduce caseworker diligence
+    severity: significant
+    likelihood: possible
+measure:
+  training_data:
+    description: Historical VA benefits applications from 2018-2025, including service records, disability ratings,
+      demographic information, and adjudication outcomes.
+    sources:
+      - name: VA Corporate Data Warehouse
+        description: Primary source of veteran service records and benefits history
+        size: 2.3M records
+        collection_method: Administrative data collection
+      - name: CMS Medicare Claims
+        description: Supplementary health data for veterans enrolled in Medicare
+        size: 890K records
+        license: Data Use Agreement
+        collection_method: Claims processing
+    known_biases:
+      - Historical underrepresentation of women veterans (12% of training data vs 17% of current veteran population)
+      - Rural veterans underrepresented due to lower digital engagement
+      - Pre-2020 data reflects outdated eligibility criteria
+    pii_present: true
+    preprocessing: De-identification of direct identifiers, stratified sampling for demographic balance, removal of records
+      with >20% missing fields
+  evaluation_data:
+    description: Held-out 20% stratified sample from 2024-2025 applications, plus synthetic edge cases
+    methodology: Stratified k-fold cross-validation (k=5) with temporal validation (train on 2018-2023, test on 2024-2025)
+    test_set_size: 460K records
+  performance_metrics:
+    metrics:
+      - name: AUC-ROC
+        value: 0.92
+        description: Area Under the Receiver Operating Characteristic Curve
+        threshold: 0.85
+        confidence_interval: 0.91-0.93
+      - name: Precision
+        value: 0.88
+        threshold: 0.8
+      - name: Recall
+        value: 0.91
+        threshold: 0.85
+      - name: F1 Score
+        value: 0.89
+    primary_metric: AUC-ROC
+    disaggregated_results:
+      - group: Gender (Male)
+        metrics:
+          - name: AUC-ROC
+            value: 0.92
+          - name: Precision
+            value: 0.89
+      - group: Gender (Female)
+        metrics:
+          - name: AUC-ROC
+            value: 0.88
+          - name: Precision
+            value: 0.84
+      - group: Race (White)
+        metrics:
+          - name: AUC-ROC
+            value: 0.93
+      - group: Race (Black)
+        metrics:
+          - name: AUC-ROC
+            value: 0.89
+      - group: Race (Hispanic)
+        metrics:
+          - name: AUC-ROC
+            value: 0.9
+  bias_evaluation:
+    conducted: true
+    methodology: Fairness assessment using disparate impact analysis, equalized odds, and calibration across protected groups
+    protected_attributes:
+      - Gender
+      - Race/Ethnicity
+      - Age group
+      - Rural/Urban residence
+    fairness_metrics:
+      - name: Disparate Impact Ratio (Gender)
+        value: 0.94
+      - name: Disparate Impact Ratio (Race)
+        value: 0.91
+      - name: Equalized Odds Difference
+        value: 0.04
+    findings: Female veterans show 4% lower AUC-ROC; Black veterans show 4% lower AUC-ROC compared to White veterans.
+      Mitigation strategies implemented include resampling and threshold adjustment.
+  robustness:
+    adversarial_testing: true
+    stress_testing: true
+    data_drift_monitoring: true
+    findings: Model robust to ±10% perturbation in input features. Performance degrades with >30% missing data. Monthly
+      drift detection using PSI shows stable distributions through Q1 2026.
+manage:
+  limitations:
+    known_limitations:
+      - Performance gap for female and minority veterans
+      - Limited to structured data; cannot process unstructured medical narratives
+      - Requires minimum 60% of input fields to be populated
+      - Does not account for policy changes after training data cutoff
+    failure_modes:
+      - Returns low confidence for veterans with unique service histories
+      - May underperform for recently separated veterans with limited records
+      - Edge cases with concurrent claims from multiple programs
+    edge_cases:
+      - Veterans with both active duty and reserve service
+      - Claims involving classified service records
+      - Survivors' benefits with complex dependency chains
+  mitigations:
+    strategies:
+      - risk: Demographic bias
+        strategy: Quarterly bias audits with threshold adjustment and resampling
+        status: implemented
+        responsible_party: AI Center of Excellence
+      - risk: Over-reliance on model predictions
+        strategy: Mandatory human review for all model-flagged denials
+        status: verified
+        responsible_party: Benefits Administration
+      - risk: Data drift degradation
+        strategy: Monthly PSI monitoring with automatic retraining trigger
+        status: implemented
+        responsible_party: ML Engineering Team
+      - risk: Privacy exposure
+        strategy: Differential privacy applied to training, federated aggregation for reporting
+        status: in_progress
+        responsible_party: Privacy Office
+    human_oversight_plan: All predictions are presented as decision-support scores. Caseworkers must independently verify
+      eligibility. No automatic denials. Supervisory review required for cases where model confidence <0.7.
+  monitoring:
+    has_plan: true
+    frequency: weekly
+    alert_thresholds:
+      - metric: AUC-ROC
+        threshold: 0.85
+        action: Trigger retraining pipeline and notify ML team
+      - metric: Disparate Impact Ratio
+        threshold: 0.8
+        action: Pause model for bias investigation
+      - metric: Prediction Volume Anomaly
+        threshold: ±30% from baseline
+        action: Investigate data pipeline issues
+    dashboard_url: https://va-ai-dashboard.internal/benefits-predictor
+  lifecycle:
+    update_frequency: Quarterly retraining with monthly monitoring
+    retraining_triggers:
+      - Performance metric drops below threshold
+      - Significant policy change affecting eligibility criteria
+      - New data source integrated
+      - Bias metric exceeds acceptable range
+    retirement_criteria:
+      - Replacement model validated and approved
+      - Regulatory mandate requiring different approach
+      - Sustained performance degradation despite retraining
+    versioning_strategy: Semantic versioning (major.minor.patch) with model registry tracking

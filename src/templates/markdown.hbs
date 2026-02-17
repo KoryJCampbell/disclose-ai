@@ -1,0 +1,394 @@
+# Model Card: {{map.model_overview.name}}
+
+| Field | Value |
+|-------|-------|
+| **Status** | {{statusBadge metadata.status}} |
+| **Classification** | {{upperCase metadata.classification}} |
+| **Card Version** | {{metadata.card_version}} |
+| **Created** | {{metadata.created_date}} |
+| **Last Updated** | {{default metadata.last_updated "N/A"}} |
+| **OMB M-24-10 Rights-Impacting** | {{yesNo map.regulatory.rights_impacting}} |
+| **OMB M-24-10 Safety-Impacting** | {{yesNo map.regulatory.safety_impacting}} |
+
+---
+
+## Table of Contents
+
+1. [GOVERN — Policies, Processes & Oversight](#1-govern--policies-processes--oversight)
+2. [MAP — Context & Risk Identification](#2-map--context--risk-identification)
+3. [MEASURE — Risk Assessment & Analysis](#3-measure--risk-assessment--analysis)
+4. [MANAGE — Risk Prioritization & Response](#4-manage--risk-prioritization--response)
+5. [Appendix A: NIST AI RMF Traceability Matrix](#appendix-a-nist-ai-rmf-traceability-matrix)
+
+---
+
+## 1. GOVERN — Policies, Processes & Oversight
+
+### 1.1 Ownership
+
+| Field | Value |
+|-------|-------|
+| **Organization** | {{govern.ownership.organization}} |
+| **Model Owner** | {{govern.ownership.model_owner}} |
+| **Contact** | {{govern.ownership.email}} |
+{{#if govern.ownership.chief_ai_officer}}| **Chief AI Officer** | {{govern.ownership.chief_ai_officer}} |
+{{/if}}{{#if govern.ownership.team}}| **Team** | {{govern.ownership.team}} |
+{{/if}}
+
+### 1.2 Approval & Review
+
+| Field | Value |
+|-------|-------|
+| **Approval Authority** | {{govern.approval.authority}} |
+{{#if govern.approval.date}}| **Approval Date** | {{govern.approval.date}} |
+{{/if}}| **Review Cadence** | {{titleCase govern.approval.review_cadence}} |
+{{#if govern.approval.next_review}}| **Next Review** | {{govern.approval.next_review}} |
+{{/if}}
+
+### 1.3 Incident Response
+
+| Field | Value |
+|-------|-------|
+| **Plan Exists** | {{yesNo govern.incident_response.has_plan}} |
+{{#if govern.incident_response.contact}}| **Contact** | {{govern.incident_response.contact}} |
+{{/if}}{{#if govern.incident_response.escalation_path}}| **Escalation Path** | {{govern.incident_response.escalation_path}} |
+{{/if}}{{#if govern.incident_response.reporting_url}}| **Reporting URL** | {{govern.incident_response.reporting_url}} |
+{{/if}}
+
+### 1.4 Supply Chain
+
+{{#ifNotEmpty govern.supply_chain.third_party_components}}
+**Third-Party Components:**
+
+| Name | Version | Provider | License |
+|------|---------|----------|---------|
+{{#each govern.supply_chain.third_party_components}}| {{name}} | {{default version "—"}} | {{default provider "—"}} | {{default license "—"}} |
+{{/each}}
+{{else}}
+No third-party components documented.
+{{/ifNotEmpty}}
+
+{{#ifNotEmpty govern.supply_chain.open_source_components}}
+**Open-Source Components:**
+
+| Name | Version | Provider | License |
+|------|---------|----------|---------|
+{{#each govern.supply_chain.open_source_components}}| {{name}} | {{default version "—"}} | {{default provider "—"}} | {{default license "—"}} |
+{{/each}}
+{{else}}
+No open-source components documented.
+{{/ifNotEmpty}}
+
+---
+
+## 2. MAP — Context & Risk Identification
+
+### 2.1 Model Overview
+
+| Field | Value |
+|-------|-------|
+| **Name** | {{map.model_overview.name}} |
+| **Version** | {{map.model_overview.version}} |
+| **Type** | {{map.model_overview.type}} |
+{{#if map.model_overview.architecture}}| **Architecture** | {{map.model_overview.architecture}} |
+{{/if}}{{#if map.model_overview.framework}}| **Framework** | {{map.model_overview.framework}} |
+{{/if}}{{#if map.model_overview.size}}| **Size** | {{map.model_overview.size}} |
+{{/if}}{{#if map.model_overview.input_format}}| **Input Format** | {{map.model_overview.input_format}} |
+{{/if}}{{#if map.model_overview.output_format}}| **Output Format** | {{map.model_overview.output_format}} |
+{{/if}}
+
+**Description:** {{map.model_overview.description}}
+
+### 2.2 Intended Use
+
+**Use Cases:**
+{{#each map.intended_use.use_cases}}
+- {{this}}
+{{/each}}
+
+**Intended Users:**
+{{#each map.intended_use.users}}
+- {{this}}
+{{/each}}
+
+| Field | Value |
+|-------|-------|
+| **Deployment Context** | {{map.intended_use.deployment_context}} |
+| **Interaction Mode** | {{titleCase map.intended_use.interaction_mode}} |
+
+### 2.3 Out-of-Scope Uses
+
+{{#ifNotEmpty map.out_of_scope.excluded_uses}}
+**Excluded Uses:**
+{{#each map.out_of_scope.excluded_uses}}
+- {{this}}
+{{/each}}
+{{else}}
+No excluded uses documented.
+{{/ifNotEmpty}}
+
+{{#ifNotEmpty map.out_of_scope.misuse_risks}}
+**Misuse Risks:**
+{{#each map.out_of_scope.misuse_risks}}
+- {{this}}
+{{/each}}
+{{/ifNotEmpty}}
+
+### 2.4 Regulatory Context
+
+{{#if map.regulatory.rights_impacting}}
+> ⚠️ **OMB M-24-10:** This AI system is designated as **rights-impacting** and requires enhanced documentation, testing, and oversight.
+{{/if}}
+{{#if map.regulatory.safety_impacting}}
+> ⚠️ **OMB M-24-10:** This AI system is designated as **safety-impacting** and requires enhanced documentation, testing, and oversight.
+{{/if}}
+
+{{#ifNotEmpty map.regulatory.laws}}
+**Applicable Laws & Regulations:**
+{{#each map.regulatory.laws}}
+- {{this}}
+{{/each}}
+{{/ifNotEmpty}}
+
+{{#ifNotEmpty map.regulatory.policies}}
+**Applicable Policies:**
+{{#each map.regulatory.policies}}
+- {{this}}
+{{/each}}
+{{/ifNotEmpty}}
+
+| Field | Value |
+|-------|-------|
+| **ATO Status** | {{titleCase map.regulatory.ato_status}} |
+| **Rights-Impacting** | {{yesNo map.regulatory.rights_impacting}} |
+| **Safety-Impacting** | {{yesNo map.regulatory.safety_impacting}} |
+
+### 2.5 Impact Assessment
+
+{{#ifNotEmpty map.impact_assessment.affected_populations}}
+**Affected Populations:**
+{{#each map.impact_assessment.affected_populations}}
+- {{this}}
+{{/each}}
+{{/ifNotEmpty}}
+
+{{#ifNotEmpty map.impact_assessment.benefits}}
+**Benefits:**
+{{#each map.impact_assessment.benefits}}
+- {{this}}
+{{/each}}
+{{/ifNotEmpty}}
+
+{{#ifNotEmpty map.impact_assessment.harms}}
+**Potential Harms:**
+{{#each map.impact_assessment.harms}}
+- {{this}}
+{{/each}}
+{{/ifNotEmpty}}
+
+{{#if map.impact_assessment.severity}}
+| Risk Factor | Assessment |
+|------------|------------|
+| **Severity** | {{riskColor map.impact_assessment.severity}} {{titleCase map.impact_assessment.severity}} |
+| **Likelihood** | {{titleCase map.impact_assessment.likelihood}} |
+{{/if}}
+
+---
+
+## 3. MEASURE — Risk Assessment & Analysis
+
+### 3.1 Training Data
+
+**Description:** {{measure.training_data.description}}
+
+{{#ifNotEmpty measure.training_data.sources}}
+**Data Sources:**
+
+| Source | Description | Size |
+|--------|------------|------|
+{{#each measure.training_data.sources}}| {{name}} | {{default description "—"}} | {{default size "—"}} |
+{{/each}}
+{{/ifNotEmpty}}
+
+{{#ifNotEmpty measure.training_data.known_biases}}
+**Known Biases:**
+{{#each measure.training_data.known_biases}}
+- {{this}}
+{{/each}}
+{{/ifNotEmpty}}
+
+| Field | Value |
+|-------|-------|
+| **PII Present** | {{yesNo measure.training_data.pii_present}} |
+{{#if measure.training_data.preprocessing}}| **Preprocessing** | {{measure.training_data.preprocessing}} |
+{{/if}}
+
+### 3.2 Evaluation Data
+
+**Description:** {{measure.evaluation_data.description}}
+
+{{#if measure.evaluation_data.methodology}}**Methodology:** {{measure.evaluation_data.methodology}}{{/if}}
+{{#if measure.evaluation_data.test_set_size}}**Test Set Size:** {{measure.evaluation_data.test_set_size}}{{/if}}
+
+### 3.3 Performance Metrics
+
+**Primary Metric:** {{measure.performance_metrics.primary_metric}}
+
+| Metric | Value | Threshold | Confidence Interval |
+|--------|-------|-----------|---------------------|
+{{#each measure.performance_metrics.metrics}}| **{{name}}** | {{value}} | {{default threshold "—"}} | {{default confidence_interval "—"}} |
+{{/each}}
+
+{{#ifNotEmpty measure.performance_metrics.disaggregated_results}}
+**Disaggregated Results:**
+
+{{#each measure.performance_metrics.disaggregated_results}}
+**{{group}}:**
+
+| Metric | Value |
+|--------|-------|
+{{#each metrics}}| {{name}} | {{value}} |
+{{/each}}
+
+{{/each}}
+{{/ifNotEmpty}}
+
+### 3.4 Bias & Fairness Evaluation
+
+| Field | Value |
+|-------|-------|
+| **Evaluation Conducted** | {{yesNo measure.bias_evaluation.conducted}} |
+{{#if measure.bias_evaluation.methodology}}| **Methodology** | {{measure.bias_evaluation.methodology}} |
+{{/if}}
+
+{{#ifNotEmpty measure.bias_evaluation.protected_attributes}}
+**Protected Attributes Evaluated:**
+{{#each measure.bias_evaluation.protected_attributes}}
+- {{this}}
+{{/each}}
+{{/ifNotEmpty}}
+
+{{#ifNotEmpty measure.bias_evaluation.fairness_metrics}}
+**Fairness Metrics:**
+
+| Metric | Value |
+|--------|-------|
+{{#each measure.bias_evaluation.fairness_metrics}}| {{name}} | {{value}} |
+{{/each}}
+{{/ifNotEmpty}}
+
+{{#if measure.bias_evaluation.findings}}**Findings:** {{measure.bias_evaluation.findings}}{{/if}}
+
+### 3.5 Robustness & Security
+
+| Test | Conducted |
+|------|-----------|
+| **Adversarial Testing** | {{checkmark measure.robustness.adversarial_testing}} |
+| **Stress Testing** | {{checkmark measure.robustness.stress_testing}} |
+| **Data Drift Monitoring** | {{checkmark measure.robustness.data_drift_monitoring}} |
+
+{{#if measure.robustness.findings}}**Findings:** {{measure.robustness.findings}}{{/if}}
+
+---
+
+## 4. MANAGE — Risk Prioritization & Response
+
+### 4.1 Known Limitations
+
+{{#ifNotEmpty manage.limitations.known_limitations}}
+**Limitations:**
+{{#each manage.limitations.known_limitations}}
+- {{this}}
+{{/each}}
+{{else}}
+No known limitations documented.
+{{/ifNotEmpty}}
+
+{{#ifNotEmpty manage.limitations.failure_modes}}
+**Failure Modes:**
+{{#each manage.limitations.failure_modes}}
+- {{this}}
+{{/each}}
+{{/ifNotEmpty}}
+
+{{#ifNotEmpty manage.limitations.edge_cases}}
+**Edge Cases:**
+{{#each manage.limitations.edge_cases}}
+- {{this}}
+{{/each}}
+{{/ifNotEmpty}}
+
+### 4.2 Mitigation Strategies
+
+{{#ifNotEmpty manage.mitigations.strategies}}
+| Risk | Strategy | Status | Responsible |
+|------|----------|--------|-------------|
+{{#each manage.mitigations.strategies}}| {{risk}} | {{strategy}} | {{mitigationStatusIcon status}} {{titleCase status}} | {{default responsible_party "—"}} |
+{{/each}}
+{{else}}
+No mitigation strategies documented.
+{{/ifNotEmpty}}
+
+{{#if manage.mitigations.human_oversight_plan}}
+**Human Oversight Plan:** {{manage.mitigations.human_oversight_plan}}
+{{/if}}
+
+### 4.3 Monitoring
+
+| Field | Value |
+|-------|-------|
+| **Monitoring Plan** | {{yesNo manage.monitoring.has_plan}} |
+{{#if manage.monitoring.frequency}}| **Frequency** | {{titleCase manage.monitoring.frequency}} |
+{{/if}}{{#if manage.monitoring.dashboard_url}}| **Dashboard** | {{manage.monitoring.dashboard_url}} |
+{{/if}}
+
+{{#ifNotEmpty manage.monitoring.alert_thresholds}}
+**Alert Thresholds:**
+
+| Metric | Threshold | Action |
+|--------|-----------|--------|
+{{#each manage.monitoring.alert_thresholds}}| {{metric}} | {{threshold}} | {{action}} |
+{{/each}}
+{{/ifNotEmpty}}
+
+### 4.4 Lifecycle
+
+{{#if manage.lifecycle.update_frequency}}**Update Frequency:** {{manage.lifecycle.update_frequency}}{{/if}}
+{{#if manage.lifecycle.versioning_strategy}}**Versioning Strategy:** {{manage.lifecycle.versioning_strategy}}{{/if}}
+
+{{#ifNotEmpty manage.lifecycle.retraining_triggers}}
+**Retraining Triggers:**
+{{#each manage.lifecycle.retraining_triggers}}
+- {{this}}
+{{/each}}
+{{/ifNotEmpty}}
+
+{{#ifNotEmpty manage.lifecycle.retirement_criteria}}
+**Retirement Criteria:**
+{{#each manage.lifecycle.retirement_criteria}}
+- {{this}}
+{{/each}}
+{{/ifNotEmpty}}
+
+---
+
+## Appendix A: NIST AI RMF Traceability Matrix
+
+This table maps model card sections to NIST AI RMF subcategories.
+
+| Subcategory | Description | Addressed |
+|-------------|-------------|-----------|
+{{#each nistTraceability}}| **{{subcategoryId}}** | {{description}} | {{#if covered}}✅{{else}}❌{{/if}} |
+{{/each}}
+
+**Overall Coverage:** {{nistCoverage.overall.covered}}/{{nistCoverage.overall.total}} subcategories ({{nistCoverage.overall.percent}}%)
+
+| Function | Coverage |
+|----------|----------|
+{{#each nistCoverage.byFunction}}| **{{function}}** | {{coverageBar percent}} |
+{{/each}}
+
+---
+
+*Generated by [@legacybridge/modelcard](https://github.com/koryjcampbell/modelcard) — NIST AI RMF Model Card Generator*
+*Generated on {{today}}*
