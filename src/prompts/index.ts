@@ -13,7 +13,7 @@ const SECTIONS = [
 ] as const;
 
 export async function runAllPrompts(data: ModelCard): Promise<ModelCard> {
-  console.log(chalk.bold('\n  NIST AI RMF Model Card Generator'));
+  console.log(chalk.bold('\n  DiscloseAI — NIST AI RMF Disclosure Generator'));
   console.log(chalk.dim('  Walk through each section to document your AI system.\n'));
 
   const result = { ...data, metadata: { ...data.metadata, last_updated: new Date().toISOString().split('T')[0] } };

@@ -5,7 +5,7 @@ import type { RepoContext } from './analyzer.js';
 export function buildSystemPrompt(): string {
   const schema = zodToJsonSchema(ModelCardSchema, 'ModelCard');
   return `You are an AI governance expert specializing in NIST AI Risk Management Framework (AI RMF).
-Your task is to analyze a machine learning repository and generate a model card that complies with NIST AI RMF and OMB M-24-10.
+Your task is to analyze a machine learning repository and generate an AI disclosure that complies with NIST AI RMF and OMB M-24-10.
 
 The model card must cover four NIST AI RMF functions:
 1. GOVERN — Policies, processes, and oversight structures
@@ -34,7 +34,7 @@ export function buildUserPrompt(context: RepoContext): string {
     .map(f => `### ${f.path} (${f.category})\n\`\`\`\n${f.content}\n\`\`\``)
     .join('\n\n');
 
-  return `Analyze this ML repository and generate a NIST AI RMF-compliant model card.
+  return `Analyze this ML repository and generate a NIST AI RMF-compliant AI disclosure.
 
 ${context.summary}
 
@@ -42,5 +42,5 @@ ${context.summary}
 
 ${fileContents}
 
-Generate the model card JSON now.`;
+Generate the disclosure JSON now.`;
 }

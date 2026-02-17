@@ -1,10 +1,10 @@
 {
-  "name": "@koryjcampbell/modelcard",
-  "version": "0.1.1",
-  "description": "NIST AI RMF Model Card Generator CLI for federal AI system documentation",
+  "name": "@koryjcampbell/disclose-ai",
+  "version": "0.2.0",
+  "description": "DiscloseAI — AI compliance reports that write themselves. NIST AI RMF aligned.",
   "type": "module",
   "bin": {
-    "modelcard": "dist/cli.js"
+    "disclose-ai": "dist/cli.js"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -29,11 +29,13 @@
   "keywords": [
     "nist",
     "ai-rmf",
-    "model-card",
+    "ai-disclosure",
     "federal",
     "govtech",
     "ai-governance",
-    "risk-management"
+    "risk-management",
+    "compliance",
+    "disclose-ai"
   ],
   "author": "Kory J. Campbell <koryjcampbelldev@gmail.com>",
   "license": "MIT",

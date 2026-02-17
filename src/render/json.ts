@@ -5,7 +5,7 @@ import type { ModelCard } from '../schema/types.js';
 export function renderJson(data: ModelCard): string {
   const jsonSchema = zodToJsonSchema(ModelCardSchema, 'ModelCard');
   const output = {
-    $schema: 'https://legacybridge.dev/schemas/modelcard/v1.json',
+    $schema: 'https://disclose-ai.dev/schemas/disclosure/v1.json',
     $schemaDefinition: jsonSchema,
     ...data,
   };

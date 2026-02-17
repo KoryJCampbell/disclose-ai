@@ -35,7 +35,7 @@ export async function generateCommand(options: GenerateOptions): Promise<void> {
       data = await runAllPrompts(data);
     }
   } else {
-    logger.info('No modelcard.yaml found. Starting interactive prompts...');
+    logger.info('No disclosure.yaml found. Starting interactive prompts...');
     data = await runAllPrompts(createDefaultModelCard());
   }
 

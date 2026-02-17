@@ -1,40 +1,40 @@
-# @koryjcampbell/modelcard
+# DiscloseAI
 
-NIST AI RMF Model Card Generator CLI — Generate compliant AI system documentation for federal agencies.
+**AI compliance reports that write themselves.** NIST AI RMF-aligned disclosure generator for federal AI systems.
 
 ## Why
 
-Federal agencies are required by **OMB M-24-10** to document all AI systems with risk assessments, bias evaluations, and intended use documentation aligned to the **NIST AI Risk Management Framework**. Existing tools don't map to NIST AI RMF functions. This CLI fills that gap.
+The government requires a safety report for every AI system (OMB M-24-10). Most teams are doing this in Word docs and spreadsheets. DiscloseAI generates compliant disclosures in 10 minutes — think TurboTax for federal AI compliance paperwork.
 
 ## Features
 
-- **Template-based** — Interactive prompts walk through each NIST AI RMF section (works air-gapped)
+- **Interactive prompts** — Walk through each NIST AI RMF section (works air-gapped)
 - **AI-assisted** — Optional `--ai` flag uses Claude API to analyze a model repo and auto-draft sections
 - **NIST AI RMF aligned** — Sections map to Govern, Map, Measure, Manage functions
 - **Multiple formats** — Markdown (primary), JSON, HTML output
 - **Validation** — Schema validation + NIST subcategory coverage scoring
-- **Traceability matrix** — Auto-generated appendix mapping fields to NIST subcategories
+- **Traceability matrix** — Auto-generated appendix mapping fields to 28 NIST subcategories
 
 ## Quick Start
 
 ```bash
 # Initialize a starter template
-npx @koryjcampbell/modelcard init
+npx @koryjcampbell/disclose-ai init
 
 # Generate via interactive prompts
-npx @koryjcampbell/modelcard generate
+npx @koryjcampbell/disclose-ai generate
 
 # Validate and check NIST coverage
-npx @koryjcampbell/modelcard validate
+npx @koryjcampbell/disclose-ai validate
 ```
 
 ## Installation
 
 ```bash
-npm install -g @koryjcampbell/modelcard
+npm install -g @koryjcampbell/disclose-ai
 
 # Or use without installing
-npx @koryjcampbell/modelcard
+npx @koryjcampbell/disclose-ai
 ```
 
 For AI-assist mode, install the optional peer dependency:
@@ -45,37 +45,37 @@ npm install @anthropic-ai/sdk
 
 ## Commands
 
-### `modelcard init`
+### `disclose-ai init`
 
-Creates a starter `modelcard.yaml` with NIST AI RMF section comments.
+Creates a starter `disclosure.yaml` with NIST AI RMF section comments.
 
 ```bash
-modelcard init              # Create in current directory
-modelcard init --quick      # Create with quick-fill prompts for basic fields
-modelcard init --dir ./out  # Create in specified directory
+disclose-ai init              # Create in current directory
+disclose-ai init --quick      # Create with quick-fill prompts for basic fields
+disclose-ai init --dir ./out  # Create in specified directory
 ```
 
-### `modelcard generate`
+### `disclose-ai generate`
 
-Generates a model card via interactive prompts or from existing YAML.
+Generates a disclosure via interactive prompts or from existing YAML.
 
 ```bash
-modelcard generate                    # Interactive prompts → Markdown
-modelcard generate --format json      # Output as JSON
-modelcard generate --format html      # Output as HTML
-modelcard generate --input card.yaml  # From existing YAML (skip prompts with --no-interactive)
-modelcard generate --ai               # AI-assisted drafting via Claude API
-modelcard generate --ai --repo ./ml   # Scan specific repo directory
+disclose-ai generate                    # Interactive prompts → Markdown
+disclose-ai generate --format json      # Output as JSON
+disclose-ai generate --format html      # Output as HTML
+disclose-ai generate --input data.yaml  # From existing YAML (skip prompts with --no-interactive)
+disclose-ai generate --ai               # AI-assisted drafting via Claude API
+disclose-ai generate --ai --repo ./ml   # Scan specific repo directory
 ```
 
-### `modelcard validate`
+### `disclose-ai validate`
 
-Validates a `modelcard.yaml` against the schema and reports NIST coverage.
+Validates a `disclosure.yaml` against the schema and reports NIST coverage.
 
 ```bash
-modelcard validate                    # Validate in current directory
-modelcard validate --input card.yaml  # Validate specific file
-modelcard validate --strict           # Fail on warnings (missing optional fields)
+disclose-ai validate                    # Validate in current directory
+disclose-ai validate --input data.yaml  # Validate specific file
+disclose-ai validate --strict           # Fail on warnings (missing optional fields)
 ```
 
 Example output:
@@ -98,7 +98,7 @@ NIST AI RMF Coverage
 
 ## NIST AI RMF Alignment
 
-The model card sections map directly to the four NIST AI RMF functions:
+The disclosure sections map directly to the four NIST AI RMF functions:
 
 | Function | Section | Subcategories |
 |----------|---------|---------------|
@@ -107,7 +107,7 @@ The model card sections map directly to the four NIST AI RMF functions:
 | **MEASURE** | Training Data, Evaluation, Metrics, Bias, Robustness | MEASURE 2.5–2.11 |
 | **MANAGE** | Limitations, Mitigations, Monitoring, Lifecycle | MANAGE 2.1–4.2 |
 
-Each generated model card includes an **Appendix A: NIST AI RMF Traceability Matrix** showing which subcategories are addressed and overall coverage percentage.
+Each generated disclosure includes an **Appendix A: NIST AI RMF Traceability Matrix** showing which subcategories are addressed and overall coverage percentage.
 
 ## AI-Assist Mode
 
@@ -115,7 +115,7 @@ When using `--ai`, the tool:
 
 1. **Scans** the repository for ML artifacts (Python files, notebooks, configs, READMEs)
 2. **Sends** file contents to Claude API with NIST context and JSON schema
-3. **Generates** a draft model card with as many fields filled as possible
+3. **Generates** a draft disclosure with as many fields filled as possible
 4. **Presents** each section for human review: accept, edit interactively, or skip
 
 The Claude API SDK is an **optional peer dependency** — the tool works fully without it. Air-gapped environments use interactive prompts only.
@@ -123,12 +123,12 @@ The Claude API SDK is an **optional peer dependency** — the tool works fully w
 ```bash
 # Requires ANTHROPIC_API_KEY environment variable
 export ANTHROPIC_API_KEY=sk-ant-...
-modelcard generate --ai --repo /path/to/ml-repo
+disclose-ai generate --ai --repo /path/to/ml-repo
 ```
 
 ## Schema
 
-The `modelcard.yaml` schema covers ~100 fields across 5 top-level sections:
+The `disclosure.yaml` schema covers ~100 fields across 5 top-level sections:
 
 - **metadata** — Version, dates, status, classification
 - **govern** — Ownership, approval, incident response, supply chain
@@ -139,7 +139,7 @@ The `modelcard.yaml` schema covers ~100 fields across 5 top-level sections:
 The full Zod schema is exported as a TypeScript type for programmatic use:
 
 ```typescript
-import { ModelCardSchema, type ModelCard } from '@koryjcampbell/modelcard';
+import { ModelCardSchema, type ModelCard } from '@koryjcampbell/disclose-ai';
 ```
 
 ## Development

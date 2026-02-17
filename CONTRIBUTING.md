@@ -1,4 +1,4 @@
-# Contributing to @legacybridge/modelcard
+# Contributing to DiscloseAI
 
 Thanks for your interest in contributing! This tool helps federal agencies comply with NIST AI RMF and OMB M-24-10 requirements for AI system documentation. Every contribution makes compliance easier for government teams.
 
@@ -6,8 +6,8 @@ Thanks for your interest in contributing! This tool helps federal agencies compl
 
 ```bash
 # Clone the repo
-git clone https://github.com/KoryJCampbell/modelcard.git
-cd modelcard
+git clone https://github.com/KoryJCampbell/disclose-ai.git
+cd disclose-ai
 
 # Install dependencies
 npm install
@@ -42,7 +42,7 @@ src/
 
 ### Good First Issues
 
-Look for issues labeled [`good first issue`](https://github.com/KoryJCampbell/modelcard/labels/good%20first%20issue). These are scoped to be approachable for new contributors.
+Look for issues labeled [`good first issue`](https://github.com/KoryJCampbell/disclose-ai/labels/good%20first%20issue). These are scoped to be approachable for new contributors.
 
 ### NIST Mapping Improvements
 
@@ -97,11 +97,11 @@ When reporting a bug, please include:
 - OS and version
 - Command you ran
 - Expected vs actual behavior
-- Contents of your `modelcard.yaml` (redact sensitive info)
+- Contents of your `disclosure.yaml` (redact sensitive info)
 
 ## Questions?
 
-Open a [Discussion](https://github.com/KoryJCampbell/modelcard/discussions) for questions, ideas, or feedback. Issues are for bugs and feature requests.
+Open a [Discussion](https://github.com/KoryJCampbell/disclose-ai/discussions) for questions, ideas, or feedback. Issues are for bugs and feature requests.
 
 ## License
 

@@ -25,7 +25,7 @@ export async function initCommand(options: InitOptions): Promise<void> {
     }
   }
 
-  const templatePath = resolve(getTemplatesDir(), 'modelcard.init.yaml');
+  const templatePath = resolve(getTemplatesDir(), 'disclosure.init.yaml');
   await copyFile(templatePath, outputPath);
   logger.success(`Created ${outputPath}`);
 
@@ -34,9 +34,9 @@ export async function initCommand(options: InitOptions): Promise<void> {
   }
 
   logger.info('Next steps:');
-  logger.dim('  1. Edit modelcard.yaml to fill in your model details');
-  logger.dim('  2. Run `modelcard generate` to create your model card');
-  logger.dim('  3. Run `modelcard validate` to check NIST coverage');
+  logger.dim('  1. Edit disclosure.yaml to fill in your AI system details');
+  logger.dim('  2. Run `disclose-ai generate` to create your disclosure');
+  logger.dim('  3. Run `disclose-ai validate` to check NIST coverage');
 }
 
 async function quickFill(filePath: string): Promise<void> {
@@ -53,5 +53,5 @@ async function quickFill(filePath: string): Promise<void> {
   data.govern.ownership.email = await input({ message: 'Contact email:' });
 
   await writeYaml(filePath, data);
-  logger.success('Quick fill complete. Edit modelcard.yaml for full details.');
+  logger.success('Quick fill complete. Edit disclosure.yaml for full details.');
 }

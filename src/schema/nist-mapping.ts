@@ -1,5 +1,5 @@
 /**
- * Maps model card fields to NIST AI RMF subcategory IDs.
+ * Maps AI disclosure fields to NIST AI RMF subcategory IDs.
  * Reference: NIST AI 100-1 (AI Risk Management Framework)
  *
  * Format: 'dotpath.to.field' → 'FUNCTION X.Y'

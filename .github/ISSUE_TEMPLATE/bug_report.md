@@ -12,7 +12,7 @@ A clear description of the bug.
 
 ## Steps to Reproduce
 
-1. Run `modelcard ...`
+1. Run `disclose-ai ...`
 2. ...
 
 ## Expected Behavior
@@ -27,9 +27,9 @@ What actually happened. Include error output if applicable.
 
 - **Node.js version**:
 - **OS**:
-- **modelcard version**:
+- **disclose-ai version**:
 
-## modelcard.yaml (if relevant)
+## disclosure.yaml (if relevant)
 
 ```yaml
 # Paste relevant portions (redact sensitive info)

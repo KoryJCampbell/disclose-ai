@@ -1,7 +1,7 @@
-export const DEFAULT_YAML_FILENAME = 'modelcard.yaml';
-export const DEFAULT_MD_FILENAME = 'MODEL_CARD.md';
-export const DEFAULT_JSON_FILENAME = 'MODEL_CARD.json';
-export const DEFAULT_HTML_FILENAME = 'MODEL_CARD.html';
+export const DEFAULT_YAML_FILENAME = 'disclosure.yaml';
+export const DEFAULT_MD_FILENAME = 'DISCLOSURE.md';
+export const DEFAULT_JSON_FILENAME = 'DISCLOSURE.json';
+export const DEFAULT_HTML_FILENAME = 'DISCLOSURE.html';
 
 export const NIST_FUNCTIONS = {
   GOVERN: {

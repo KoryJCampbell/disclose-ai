@@ -31,6 +31,8 @@ const PRIORITY_PATTERNS = [
   '**/README*',
   '**/model_card*',
   '**/MODEL_CARD*',
+  '**/disclosure*',
+  '**/DISCLOSURE*',
   '**/requirements*.txt',
   '**/setup.py',
   '**/pyproject.toml',

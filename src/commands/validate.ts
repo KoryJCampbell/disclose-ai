@@ -16,7 +16,7 @@ export async function validateCommand(options: ValidateOptions): Promise<void> {
 
   if (!(await fileExists(yamlPath))) {
     logger.error(`File not found: ${yamlPath}`);
-    logger.dim('Run `modelcard init` to create a starter template.');
+    logger.dim('Run `disclose-ai init` to create a starter template.');
     process.exit(1);
   }
 
